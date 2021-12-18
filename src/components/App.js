@@ -7,6 +7,7 @@ import Product from "./Product";
 import Router from "./Router";
 import Search from "./Search";
 import BoardItem from "./Board/BoardItem";
+import ProductEdit from "./Product/ProductEdit";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/:id" element={<BoardItem />} />
         <Route path="/search" element={<Search />} />
         <Route path="/product" element={<Product />} />
+        <Route path="/product/:id" element={<ProductEdit />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
       </Routes>
