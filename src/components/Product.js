@@ -5,6 +5,7 @@ import {
   Grid,
   InputLabel,
   List,
+  ListItemButton,
   ListItem,
   ListItemText,
   MenuItem,
@@ -19,6 +20,10 @@ import {
   productAllCount,
   productPage,
 } from "../apis/product";
+import { useRecoilValue } from "recoil";
+import { userAuth } from "../atoms";
+import { putInCart } from "../apis/cart";
+import Swal from "sweetalert2";
 
 const Product = () => {
   const [cateOne, setCateOne] = useState("");
@@ -105,6 +110,17 @@ const Product = () => {
     setCateOne("");
     const data = await productPage(page);
     setProducts(data);
+  };
+
+  const auth = useRecoilValue(userAuth);
+
+  const wantToBuy = async (product_id) => {
+    await putInCart({
+      cart_id: auth.cart_id,
+      user_id: auth.user_email,
+      product_id,
+    });
+    Swal.fire("카트 추가", "선택한 상품이 카트에 추가되었습니다", "success");
   };
 
   useEffect(() => {
@@ -208,7 +224,7 @@ const Product = () => {
           <ListItemText primary="Img" />
         </Grid>
         <Grid item xs={5}>
-          <ListItemText primary="Title" />
+          <ListItemText primary="Add Cart" />
         </Grid>
         <Grid item xs={2}>
           <ListItemText primary="Category" />
@@ -240,7 +256,12 @@ const Product = () => {
                   />
                 </Grid>
                 <Grid item xs={5}>
-                  <div dangerouslySetInnerHTML={{ __html: item.title }}></div>
+                  <ListItemButton
+                    onClick={() => wantToBuy(item.product_id)}
+                    style={{ textAlign: "center" }}
+                  >
+                    <div dangerouslySetInnerHTML={{ __html: item.title }}></div>
+                  </ListItemButton>
                 </Grid>
                 <Grid item xs={2}>
                   <ListItemText primary={item.category1} />
