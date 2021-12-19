@@ -65,7 +65,7 @@ const Cart = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {cartList.map((item) => (
+              {cartList?.map((item) => (
                 <TableRow
                   key={item.product_id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -114,11 +114,11 @@ const Cart = () => {
               right: 0,
             }}
           >
-            총 {total.toLocaleString()} 원
+            총 {total?.toLocaleString()} 원
           </div>
         </Box>
       </Box>
-      <OrederForm total={total.toLocaleString()} />
+      <OrederForm total={total?.toLocaleString()} />
     </>
   );
 };
