@@ -6,7 +6,7 @@ import axios from "axios";
 export const getMyCartId = async (user_id) => {
   const {
     data: { json },
-  } = await axios.post("api/cart?type=save", { user_id });
+  } = await axios.post("api/cart?type=cart_id", { user_id });
   return json[0].cart_id;
 };
 
@@ -34,12 +34,16 @@ export const getMyCartTotal = async (info) => {
 
 // 장바구니 결제
 export const orderCart = async (info) => {
-  const { data } = await axios.post("/api/cart?type=order", info);
-  return data;
+  const { data: payment } = await axios.post("/api/cart?type=order", info);
+  if (payment === "success") {
+    // 결제 성공 으로 변환 (결제와 동시에 이루어져야 새로운 카트id 발급이 가능)
+    const { data } = await axios.post("/api/cart?type=modify", {
+      cart_id: info.cart_id,
+      user_id: info.user_id,
+      complete_yn: "Y",
+      product_id: "",
+    });
+    return data;
+  }
+  return false;
 };
-
-// 결제 확정
-// export const orderComplete = async (info) => {
-//   const { data } = await axios.post("/api/cart?type=modify", info);
-//   return data;
-// };
