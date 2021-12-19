@@ -1,14 +1,15 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { orderCart } from "../../apis/cart";
-import { useRecoilValue } from "recoil";
+import { orderCart, getMyCartId } from "../../apis/cart";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userAuth } from "../../atoms";
+
 const OrederForm = ({ total }) => {
   const nav = useNavigate();
   const { user_email, cart_id } = useRecoilValue(userAuth);
-
+  const setAuth = useSetRecoilState(userAuth);
   const [tel1, setTel1] = useState("010");
   const [tel2, setTel2] = useState("");
   const [tel3, setTel3] = useState("");
@@ -64,7 +65,9 @@ const OrederForm = ({ total }) => {
     if (res === "success") {
       Swal.fire("결제 완료", "카트의 상품이 결제되었습니다", "success");
       nav("/order");
-      //! 실제로는 결제가 완료되면 cart id를 갱신하는 작업이 필요하다
+      // 결제 후 갱신
+      const cartId = await getMyCartId(user_email);
+      setAuth((info) => ({ ...info, cart_id: cartId }));
     } else {
       Swal.fire({
         icon: "error",
