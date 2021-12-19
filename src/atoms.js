@@ -7,6 +7,6 @@ export const userAuth = atom({
     user_name: "없음",
     user_confirm: "Y", // ?
     user_password: "", // 암호화된 정보
-    cart_id: "sample직접만들어낸cartid",
+    cart_id: "",
   },
 });
