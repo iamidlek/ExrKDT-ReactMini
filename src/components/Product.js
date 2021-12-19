@@ -20,9 +20,9 @@ import {
   productAllCount,
   productPage,
 } from "../apis/product";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userAuth } from "../atoms";
-import { putInCart } from "../apis/cart";
+import { getMyCartId, putInCart } from "../apis/cart";
 import Swal from "sweetalert2";
 
 const Product = () => {
@@ -113,7 +113,6 @@ const Product = () => {
   };
 
   const auth = useRecoilValue(userAuth);
-
   const wantToBuy = async (product_id) => {
     await putInCart({
       cart_id: auth.cart_id,
@@ -123,17 +122,26 @@ const Product = () => {
     Swal.fire("카트 추가", "선택한 상품이 카트에 추가되었습니다", "success");
   };
 
+  const setAuth = useSetRecoilState(userAuth);
+  // 비동기 기다리지 않고 클린업 하는 방법
+  const [isClean, setIsClean] = useState(false);
   useEffect(() => {
     (async () => {
-      const [counts, data, list] = await Promise.all([
+      const [counts, data, list, cartId] = await Promise.all([
         productAllCount(),
         getCategory({ num: 1 }),
         productPage(1),
+        getMyCartId(auth.user_email),
       ]);
+      if (isClean) return;
+      setAuth((info) => ({ ...info, cart_id: cartId }));
       setCount(counts);
       setProducts(list);
       setCategory1(data);
     })();
+    return () => {
+      setIsClean(true);
+    };
   }, []);
   return (
     <>
