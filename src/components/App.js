@@ -8,6 +8,7 @@ import Router from "./Router";
 import Search from "./Search";
 import BoardItem from "./Board/BoardItem";
 import ProductEdit from "./Product/ProductEdit";
+import OrderDetail from "./Oreder/OrderDetail";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/product/:id" element={<ProductEdit />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/order/:id" element={<OrderDetail />} />
       </Routes>
     </Container>
   );
