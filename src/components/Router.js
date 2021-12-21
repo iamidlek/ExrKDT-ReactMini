@@ -28,7 +28,7 @@ const Routes = () => {
     if (pathname === "/search") setValue(1);
     if (pathname.includes("/product")) setValue(2);
     if (pathname === "/cart") setValue(3);
-    if (pathname === "/order") setValue(4);
+    if (pathname.includes("/order")) setValue(4);
   }, [pathname]);
   return (
     <Box sx={{ borderBottom: 1, borderColor: "#ccc", marginBottom: "30px" }}>
