@@ -20,9 +20,9 @@ import {
   productAllCount,
   productPage,
 } from "../apis/product";
+import { getMyCartId, putInCart } from "../apis/cart";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userAuth } from "../atoms";
-import { getMyCartId, putInCart } from "../apis/cart";
 import Swal from "sweetalert2";
 
 const Product = () => {
@@ -40,6 +40,7 @@ const Product = () => {
   const [count, setCount] = useState(0);
 
   const navigate = useNavigate();
+  const auth = useRecoilValue(userAuth);
 
   const Category1Change = async (event) => {
     const {
@@ -48,7 +49,10 @@ const Product = () => {
     setCateOne(value);
     // 카테고리2 가져오기
     const data = await getCategory({ num: 2, category1: value });
-    const list = await selectedList({ category1: value });
+    const list = await selectedList({
+      user_id: auth.user_email,
+      category1: value,
+    });
     setProducts(list);
     setCategory2(data);
   };
@@ -64,7 +68,11 @@ const Product = () => {
       category1: cateOne,
       category2: value,
     });
-    const list = await selectedList({ category1: cateOne, category2: value });
+    const list = await selectedList({
+      user_id: auth.user_email,
+      category1: cateOne,
+      category2: value,
+    });
     setProducts(list);
     setCategory3(data);
   };
@@ -82,6 +90,7 @@ const Product = () => {
       category3: value,
     });
     const list = await selectedList({
+      user_id: auth.user_email,
       category1: cateOne,
       category2: cateTwo,
       category3: value,
@@ -97,6 +106,7 @@ const Product = () => {
     setCateFour(value);
     // 해당 정보 가져오기
     const list = await selectedList({
+      user_id: auth.user_email,
       category1: cateOne,
       category2: cateTwo,
       category3: cateThr,
@@ -108,11 +118,10 @@ const Product = () => {
   const pageNation = async (page) => {
     // pagenation 보여지는 조건
     setCateOne("");
-    const data = await productPage(page);
+    const data = await productPage(page, auth.user_email);
     setProducts(data);
   };
 
-  const auth = useRecoilValue(userAuth);
   const wantToBuy = async (product_id) => {
     await putInCart({
       cart_id: auth.cart_id,
@@ -128,9 +137,9 @@ const Product = () => {
   useEffect(() => {
     (async () => {
       const [counts, data, list, cartId] = await Promise.all([
-        productAllCount(),
+        productAllCount(auth.user_email),
         getCategory({ num: 1 }),
-        productPage(1),
+        productPage(1, auth.user_email),
         getMyCartId(auth.user_email),
       ]);
       if (isClean) return;
