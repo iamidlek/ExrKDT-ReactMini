@@ -57,10 +57,10 @@ const OrederForm = ({ total }) => {
       card_number4: card4,
       card_month: expiry.slice(0, 2),
       card_year: expiry.slice(3),
-      total_price: total.replace(",", ""),
+      total_price: total.replace(/,/g, ""),
       cart_id,
       user_id: user_email,
-      complete_yn: "N", // Y로 구매 확정 하는건 다른 api를 써야해서
+      complete_yn: "Y", // order table에 들어가는데 조회되려면 무조건 Y 를 줘야함
     });
     if (res === "success") {
       Swal.fire("결제 완료", "카트의 상품이 결제되었습니다", "success");
