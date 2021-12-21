@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // 총 상품 개수
-export const productAllCount = async (user_id = "test@test.com") => {
+export const productAllCount = async (user_id) => {
   const {
     data: { json },
   } = await axios.post("api/product?type=count", { user_id });
@@ -9,11 +9,11 @@ export const productAllCount = async (user_id = "test@test.com") => {
 };
 
 // 등록된 상품 페이지 네이션
-export const productPage = async (start = 1) => {
+export const productPage = async (start = 1, user_id) => {
   const {
     data: { json },
   } = await axios.post("api/product?type=page", {
-    user_id: "", // 필수
+    user_id,
     start: (Number(start) - 1) * 10,
     length: 10,
   });
@@ -35,7 +35,7 @@ export const getCategory = async ({ num, category1, category2, category3 }) => {
 
 // 선택된 조건에 따른 목록 (카테고리 or 제목)
 export const selectedList = async ({
-  user_id = "", // 필수
+  user_id,
   title,
   category1,
   category2,
