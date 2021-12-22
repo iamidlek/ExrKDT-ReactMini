@@ -42,3 +42,24 @@ export const orderDetail = async (user_id, order_id) => {
   });
   return json;
 };
+
+// 차트 정보
+export const getChartInfo = async (user_id) => {
+  const {
+    data: { json },
+  } = await axios.post("/api/order?type=userStat", {
+    user_id,
+  });
+  return json;
+};
+
+// 상세 정보
+export const getChartdetail = async (user_id, category1) => {
+  const {
+    data: { json },
+  } = await axios.post("/api/order?type=userStatDetail", {
+    user_id,
+    category1,
+  });
+  return json;
+};
