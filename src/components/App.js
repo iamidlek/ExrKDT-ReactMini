@@ -9,6 +9,9 @@ import Search from "./Search";
 import BoardItem from "./Board/BoardItem";
 import ProductEdit from "./Product/ProductEdit";
 import OrderDetail from "./Oreder/OrderDetail";
+import Chart from "./Oreder/Chart";
+import MyPage from "./MyPage";
+import Login from "./Login";
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
         <Route path="/order/:id" element={<OrderDetail />} />
+        <Route path="/order/chart" element={<Chart />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Container>
   );
