@@ -18,26 +18,36 @@ const Routes = () => {
     setValue(newValue);
   };
 
+  const garud = (path) => {
+    if (!auth.user_email && path !== "/") {
+      requireLogin();
+      setValue(0);
+    } else {
+      navigate(path);
+    }
+  };
+
   const requireLogin = () => {
-    console.log("로그인 페이지로 이동");
+    navigate("/login");
   };
 
   useEffect(() => {
-    if (!auth.user_email && pathname !== "/") requireLogin();
-    if (pathname === "/") setValue(0);
+    if (pathname === "/" || pathname === "/login") setValue(0);
     if (pathname === "/search") setValue(1);
     if (pathname.includes("/product")) setValue(2);
     if (pathname === "/cart") setValue(3);
     if (pathname.includes("/order")) setValue(4);
+    if (pathname.includes("/mypage")) setValue(5);
   }, [pathname]);
   return (
     <Box sx={{ borderBottom: 1, borderColor: "#ccc", marginBottom: "30px" }}>
       <Tabs value={value} onChange={handleChange}>
-        <Tab label="Board" onClick={() => navigate("/")} />
-        <Tab label="Search" onClick={() => navigate("/search")} />
-        <Tab label="Product" onClick={() => navigate("/product")} />
-        <Tab label="Cart" onClick={() => navigate("/cart")} />
-        <Tab label="Order" onClick={() => navigate("/order")} />
+        <Tab label="Board" onClick={() => garud("/")} />
+        <Tab label="Search" onClick={() => garud("/search")} />
+        <Tab label="Product" onClick={() => garud("/product")} />
+        <Tab label="Cart" onClick={() => garud("/cart")} />
+        <Tab label="Order" onClick={() => garud("/order")} />
+        <Tab label="mypage" onClick={() => garud("/mypage")} />
       </Tabs>
     </Box>
   );
