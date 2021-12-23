@@ -85,18 +85,6 @@ const OrderDetail = () => {
                     primary={Number(item.l_price).toLocaleString() + "원"}
                   />
                 </Grid>
-                {/* <Grid item xs={1}>
-                  <Button
-                    variant="outlined"
-                    onClick={() =>
-                      navigate(`/product/${item.product_id}`, {
-                        state: { item },
-                      })
-                    }
-                  >
-                    변경
-                  </Button>
-                </Grid> */}
               </Grid>
             </ListItem>
           ))}

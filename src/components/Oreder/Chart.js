@@ -59,7 +59,6 @@ const Chart = () => {
       for (const [key, value] of Object.entries(objs)) {
         infos.push({ category1: key, sum: value });
       }
-      console.log(infos);
       setChartInfo(infos);
     })();
   }, []);
