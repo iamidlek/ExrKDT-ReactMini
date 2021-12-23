@@ -18,22 +18,20 @@ const style = {
   alignItems: "center",
 };
 
-const BoardItem = () => {
+const BoardDetail = () => {
   const {
     state: { board },
   } = useLocation();
   const nav = useNavigate();
-  const [id, setId] = useState("");
   const [wTitle, setWTitle] = useState("");
   const [wContent, setWContent] = useState("");
   const [wUserName, setUserName] = useState("");
   const [wPassword, setPassword] = useState("");
-
   const [cPassword, setCpassword] = useState("");
 
   const editBoard = () => {
     createBoard({
-      id,
+      id: board.id,
       title: wTitle,
       content: wContent,
       insert_user: wUserName,
@@ -43,7 +41,6 @@ const BoardItem = () => {
   };
 
   useEffect(() => {
-    setId(board.id);
     setWTitle(board.title);
     setWContent(board.content);
     setUserName(board.insert_user);
@@ -99,7 +96,6 @@ const BoardItem = () => {
         >
           수정하기
         </Button>
-
         <Button
           variant="outlined"
           onClick={() => nav("/")}
@@ -112,4 +108,4 @@ const BoardItem = () => {
   );
 };
 
-export default BoardItem;
+export default BoardDetail;
