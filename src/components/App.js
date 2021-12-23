@@ -4,9 +4,9 @@ import Board from "./Board";
 import Cart from "./Cart";
 import Order from "./Order";
 import Product from "./Product";
-import Router from "./Router";
+import Router from "./routes/Router";
 import Search from "./Search";
-import BoardItem from "./Board/BoardItem";
+import BoardDetail from "./Board/BoardDetail";
 import ProductEdit from "./Product/ProductEdit";
 import OrderDetail from "./Oreder/OrderDetail";
 import Chart from "./Oreder/Chart";
@@ -19,7 +19,7 @@ function App() {
       <Router />
       <Routes>
         <Route path="/" element={<Board />} />
-        <Route path="/:id" element={<BoardItem />} />
+        <Route path="/:id" element={<BoardDetail />} />
         <Route path="/search" element={<Search />} />
         <Route path="/product" element={<Product />} />
         <Route path="/product/:id" element={<ProductEdit />} />
