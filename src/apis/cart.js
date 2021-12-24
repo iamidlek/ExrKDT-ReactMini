@@ -1,8 +1,5 @@
 import axios from "axios";
 
-// 카트 아이디 가져오기 혹은 atom에 바로 적용?
-//! 로그인 시 가져올것 로그인 기능 404 나머지 3개는 잘됨
-//! 추가 장바구니 결제시에도 새로운 cartid를 부여받아야함
 export const getMyCartId = async (user_id) => {
   const {
     data: { json },
