@@ -37,7 +37,7 @@ export const orderCart = async (info) => {
     const { data } = await axios.post("/api/cart?type=modify", {
       cart_id: info.cart_id,
       user_id: info.user_id,
-      complete_yn: "Y",
+      complete_yn: "Y", // cart table의 complete_yn: "Y"
       product_id: "",
     });
     return data;
